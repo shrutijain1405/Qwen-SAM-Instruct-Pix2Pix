@@ -43,42 +43,72 @@ CLIP-Score↑ | 24.314 (4.193) | 23.255 (3.656) | 19.306 (4.167) | 25.144 (4.083
 
 ## Installation
 
+conda create --name grndpix2pix -y python=3.10
+
+conda activate grndpix2pix
+
+
 ---
 
-We provide a ```requirements.txt``` that contains most of the dependencies needed. To install them just run:
+We provide a requirements.txt that contains most of the dependencies needed. To install them just run:
 
-```
+
 pip install -r requirements.txt
-```
+
 
 You will need to download the NLP model separately with:
 
-```
+
+pip install -U "spacy==3.8.2" "numpy<2"
+
 python -m spacy download en_core_web_sm
-```
+
 
 Lastly, to install GroundingDINO:
 
-```
-export CUDA_HOME=/path/to/your/cuda/installation
+
+export CUDA_HOME=/usr/local/cuda
 
 git clone https://github.com/IDEA-Research/GroundingDINO.git
+
 cd GroundingDINO
+
+pip install torch==2.4.1+cu124 torchvision==0.19.1+cu124 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
+
 python setup.py install
 
 mkdir weights
+
 cd weights
+
 wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth
+
 cd ../../
-```
+
+pip install huggingface_hub==0.23.0
+
+pip install addict
+
+pip install yapf
+
+pip install matplotlib
+
+pip install pycocotools
+
+pip install timm
+
+pip install supervision
+
+
 
 Please refer to [GroundingDINO](https://github.com/IDEA-Research/GroundingDINO) if you encounter difficulties.
 
 \
 To run our model we provide a jupyter notebook:
-```
+
+python grounded-instruct-pix2pix.py
 grounded-instruct-pix2pix.ipynb
-```
+
 
 
 ## Tips and Examples
@@ -91,14 +121,14 @@ Because our method recovers the background during the late stages of denoising,
 we are free to use higher text-guidance or lower image-guidance scales.
 For reference the default hyperparameters are:
 
-```
+
 image_guidance_scale = 1.5
 text_guidance_scale  = 7.5
 
 # here, steps are defined w.r.t. num_train_steps(=1000)
 start_blending_at_tstep = 100
 end_blending_at_tstep   = 1
-```
+
 
 
 ### Examples with default hyperparameters.
@@ -113,11 +143,11 @@ end_blending_at_tstep   = 1
 
 ### Examples with different guidance scales.
 
-Here, to get a better looking edit, we set the ```image_guidance_scale = 1.25```.
+Here, to get a better looking edit, we set the image_guidance_scale = 1.25.
 ![hedgehog_forest](./src/hedgehog_forest.png)
 
 
-We used ```image_guidance_scale = 1.0``` to best match the color of the carpet to the overall color palette of the room.
+We used image_guidance_scale = 1.0 to best match the color of the carpet to the overall color palette of the room.
 ![bedroom_carpet](./src/bedroom_carpet.png)
 
 ### About the Inversion Range
@@ -126,10 +156,10 @@ Even though latent blending rarely leaves blending artifacts, you may still enco
 In case of this edit, we remove the blending artifacts that were present around the right hand in the edited image 
 by shifting the latent blending interval towards earlier denoising steps:
 
-```
+
 text_guidance_scale     = 5.0
 start_blending_at_tstep = 300
 end_blending_at_tstep   = 200
-```
+
 
 ![bunny](./src/bunny.png)

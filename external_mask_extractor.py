@@ -58,7 +58,7 @@ class ExternalMaskExtractor():
         self.groundingdino_model = load_model_hf(ckpt_repo_id, ckpt_filename, ckpt_config_filename)
         
         # Next, load Segment-Anything
-        sam_path = '/home/artur.shagidanov/text-guided-image-editing/Grounded-Segment-Anything/sam_vit_h_4b8939.pth'
+        sam_path = '/home/ubuntu/spjain/Grounded-Instruct-Pix2Pix/SAM/weights/sam_vit_h_4b8939.pth'
         sam = build_sam(checkpoint=sam_path).to(device)
         self.sam_predictor = SamPredictor(sam)
 
