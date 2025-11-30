@@ -69,23 +69,7 @@ Lastly, to install GroundingDINO:
 
 export CUDA_HOME=/usr/local/cuda
 
-git clone https://github.com/IDEA-Research/GroundingDINO.git
-
-cd GroundingDINO
-
 pip install torch==2.4.1+cu124 torchvision==0.19.1+cu124 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu124
-
-python setup.py install
-
-mkdir weights
-
-cd weights
-
-wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth
-
-cd ../../
-
-pip install huggingface_hub==0.23.0
 
 pip install addict
 
@@ -98,17 +82,6 @@ pip install pycocotools
 pip install timm
 
 pip install supervision
-
-
-
-Please refer to [GroundingDINO](https://github.com/IDEA-Research/GroundingDINO) if you encounter difficulties.
-
-\
-To run our model we provide a jupyter notebook:
-
-python grounded-instruct-pix2pix.py
-grounded-instruct-pix2pix.ipynb
-
 
 
 ## Tips and Examples
